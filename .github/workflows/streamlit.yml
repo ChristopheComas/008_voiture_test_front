@@ -40,11 +40,8 @@ jobs:
         # Commit the removal of files
         git commit -m "Reset main branch"
 
-        # Rebase main on dev branch, auto-resolve conflicts using 'ours' strategy
-        git rebase dev --strategy-option=ours
-
-        # Continue rebase in case of conflicts
-        git rebase --continue || git rebase --skip
+        # Rebase main on dev branch, auto-resolve conflicts by skipping
+        git rebase dev || git rebase --skip  # Skip problematic commits
 
         # Push changes to the main branch
         git push origin main --force  # Force push since we rewrote history
