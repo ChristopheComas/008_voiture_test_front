@@ -1,4 +1,4 @@
-name: Test and Merge Dev to Main
+name: Test and Reset Main from Dev
 
 on:
   push:
@@ -24,12 +24,24 @@ jobs:
     - name: Run tests
       run: pytest
 
-    - name: Merge dev into main if tests pass
+    - name: Reset main branch and rebase from dev if tests pass
       if: success()
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git fetch origin main  # Fetch the main branch
+        
+        # Fetch the latest main and checkout
+        git fetch origin main
         git checkout main
-        git merge dev --no-ff --allow-unrelated-histories  # Allow merging unrelated histories
-        git push origin main
+
+        # Delete all files in the main branch
+        git rm -rf .
+
+        # Commit the removal of files
+        git commit -m "Reset main branch"
+
+        # Rebase main on dev branch
+        git rebase dev
+
+        # Push changes to the main branch
+        git push origin main --force  # Force push since we rewrote history
