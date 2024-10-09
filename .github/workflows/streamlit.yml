@@ -1,0 +1,47 @@
+name: Test and Reset Main from Dev
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt  # Add any necessary dependencies for your project here
+
+    - name: Run tests
+      run: pytest
+
+    - name: Reset main branch and rebase from dev if tests pass
+      if: success()
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        
+        # Fetch the latest main and checkout
+        git fetch origin main
+        git checkout main
+
+        # Delete all files in the main branch
+        git rm -rf .
+
+        # Commit the removal of files
+        git commit -m "Reset main branch"
+
+        # Rebase main on dev branch, auto-resolve conflicts by skipping
+        git rebase dev || git rebase --skip  # Skip problematic commits
+
+        # Push changes to the main branch
+        git push origin main --force  # Force push since we rewrote history
