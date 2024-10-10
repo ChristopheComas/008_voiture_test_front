@@ -15,12 +15,15 @@ import streamlit as st
 
 def add_numbers(num1, num2):
     """Function to add two numbers."""
-    return num1 + num2 + 2
+    return num1 + num2
 
 # Streamlit interface
 st.title("Add Two Numbers")
 num1 = st.number_input("Enter the first number:")
 num2 = st.number_input("Enter the second number:")
+num3 = st.number_input("Enter the first number:")
+num4 = st.number_input("Enter the first number:")
+num5 = st.number_input("Enter the first number:")
 
 if st.button("Add"):
     result = add_numbers(num1, num2)
