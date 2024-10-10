@@ -19,11 +19,11 @@ def add_numbers(num1, num2):
 
 # Streamlit interface
 st.title("Add Two Numbers")
-num1 = st.number_input("Enter the first number:")
-num2 = st.number_input("Enter the second number:")
-num3 = st.number_input("Enter the first number:")
-num4 = st.number_input("Enter the first number:")
-num5 = st.number_input("Enter the first number:")
+num1 = st.number_input("Enter the 1 number:")
+num2 = st.number_input("Enter the 2 number:")
+num3 = st.number_input("Enter the 3 number:")
+num4 = st.number_input("Enter the 4 number:")
+num5 = st.number_input("Enter the 5 number:")
 
 if st.button("Add"):
     result = add_numbers(num1, num2)
