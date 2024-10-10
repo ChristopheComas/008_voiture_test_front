@@ -36,5 +36,4 @@ jobs:
       - name: Copy front.py to streamlit folder
         if: success()  # Cette étape s'exécute uniquement si pytest a réussi
         run: |
-          mkdir -p streamlit
           cp front.py streamlit/
