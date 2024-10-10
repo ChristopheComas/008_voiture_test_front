@@ -1,5 +1,4 @@
 name: Streamlit app
-name: Run Pytest and Copy File
 
 # Déclencher l'action quand il y a un push sur la branche main
 on:
