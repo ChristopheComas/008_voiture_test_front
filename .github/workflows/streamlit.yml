@@ -21,12 +21,6 @@ jobs:
       - uses: streamlit/streamlit-app-action@v0.0.3
         with:
           app-path: front.py
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
       - uses: actions/checkout@v2
-
       - name: Rename file 
         run: cp front.py front_checked.py
