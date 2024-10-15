@@ -4,8 +4,7 @@ name: Streamlit app
 on:
   push:
     branches: ["dev"]
-  pull_request:
-    branches: ["dev"]
+
 
 permissions:
   contents: read
@@ -14,13 +13,13 @@ jobs:
   streamlit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - uses: streamlit/streamlit-app-action@v0.0.3
-        with:
-          app-path: front.py
-      - uses: actions/checkout@v2
-      - name: Rename file 
-        run: cp front.py front_checked.py
+    - name: GIT commit and push docs
+      env: 
+        CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
+        CI_COMMIT_AUTHOR: Comas Christophe
+      run: |
+        git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+        git config --global user.email "christophe.comas66@gmail.com"
+        git mv front.py front_deploy.py
+        git commit -m "Rename file"
+        git push
