@@ -1,25 +1,29 @@
 name: Streamlit app
 
-# Déclencher l'action quand il y a un push sur la branche main
+# Déclencher l'action quand il y a un push sur la branche dev
 on:
   push:
     branches: ["dev"]
 
-
 permissions:
-  contents: read
+  contents: write  # You need write permission to push changes
 
 jobs:
   streamlit:
     runs-on: ubuntu-latest
     steps:
+    # Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Set up git, rename the file, commit and push the changes
     - name: GIT commit and push docs
       env: 
-        CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
-        CI_COMMIT_AUTHOR: Comas Christophe
+        CI_COMMIT_MESSAGE: "Rename front.py to front_deploy.py"
+        CI_COMMIT_AUTHOR: "Comas Christophe"
       run: |
         git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
         git config --global user.email "christophe.comas66@gmail.com"
         git mv front.py front_deploy.py
-        git commit -m "Rename file"
+        git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
         git push
